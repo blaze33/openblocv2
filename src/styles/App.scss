@@ -1,0 +1,125 @@
+@import '~purecss/build/pure.css';
+@import '~purecss/build/grids.css';
+@import '~purecss/build/grids-responsive.css';
+@import '~purecss/build/menus.css';
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 1.5em;
+  /*position: fixed;
+  top: 2em;
+  left: 2em;*/
+  margin: 1em;
+  vertical-align: middle;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.truncate {
+  width: 250px;
+  /*white-space: nowrap;*/
+  /*overflow: hidden;*/
+  /*text-overflow: ellipsis;*/
+}
+
+.AppHeader {
+  background-color: #EEE;
+  margin-bottom: 2em;
+  .pure-menu-link{
+    color: #222;
+  }
+
+  .pure-menu-children {
+    border-radius: 5px;
+    border: 1px solid aliceblue;
+    background-color: #FDFDFD;
+    .pure-menu-link {
+      color: #444;
+      &:hover {
+        background-color: #f8eacb;
+      }
+    }
+  }
+
+  
+  .blogLinks {
+    li {
+      // border: 1px solid #DDD;
+      a {
+          white-space: normal;
+      }
+      // &:nth-child(2n) a {background-color: #FFF};
+      // &:nth-child(2n+1) a {background-color: white}
+      // &:hover {
+      //   border: 1px solid #888;
+      //   border-radius: 5px;
+      // }
+    }
+
+    .blogPostLink {
+      @extend .truncate;
+      text-align: left;
+      font-size: .9em;
+      span {
+        font-size: .6em;
+      }
+    }
+  }
+
+  .contactLinks {
+    img {
+      height: 1em;
+      vertical-align: middle;
+      margin: 0 0.2em;
+    }
+    .linkedin {
+      color: #007bb6;
+    }
+    .github {
+      color: black;
+    }
+    .twitter {
+      color: #00aced;
+    }
+  }
+}
+
+.AppContent {
+  section {
+    margin-bottom: 3em;
+  }
+}
+
+.AppFooter {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #EEE;
+  padding: 0.5em 0;
+  /*font-size: .8em;*/
+  color: #777;
+}
+
+svg text {
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+svg text::selection {
+    background: none;
+}
+
+.vx-axis-left {
+  line {
+    opacity: 0
+  }
+}
