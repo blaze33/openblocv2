@@ -62,6 +62,16 @@ import * as d3 from 'd3'
       return (left ? -1 : 1) * m * (d + 1) / (d + (m / Math.abs(x - a))) + a;
     }
 
+    fisheye.invert = function(xf) {
+      let left = xf < a
+      let range = d3.extent(scale.range())
+      let min = range[0]
+      let max = range[1]
+      let m = left ? a - min : max - a;
+      if (m === 0) m = max - min;
+      return scale.invert(a + m * (xf - a) / ((d + 1) * m - (left ? -1 : 1) * d * (xf - a)))
+    }
+
     fisheye.distortion = function(_) {
       if (!arguments.length) return d;
       d = +_;
@@ -88,7 +98,6 @@ import * as d3 from 'd3'
       let method
       while (++i < n) {
         method = arguments[i]
-        console.log(method)
         target[method] = d3_rebind(target, source, source[method])};
       return target;
     };

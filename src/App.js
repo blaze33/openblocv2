@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment'
 import './styles/App.scss';
-
+import sizeMe from 'react-sizeme'
 import Menu from './components/menu/menu'
 import Timeline from './components/timeline'
 
@@ -34,7 +34,7 @@ class App extends Component {
           </section>
           <section className="pure-g">
             <div className='pure-u-1'>
-              <Timeline width={600} height={400} />
+              <Timeline width={this.props.size.width} height={400} />
             </div>
           </section>
         </div>
@@ -46,4 +46,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default sizeMe()(App);

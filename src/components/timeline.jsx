@@ -6,12 +6,18 @@ import moment from 'moment'
 import {interpolateRound} from 'd3-interpolate'
 import {Group} from '@vx/group'
 import cx from 'classnames';
-import { AxisLeft } from '@vx/axis'
+import { AxisLeft, AxisBottom } from '@vx/axis'
 import { withTooltip, Tooltip } from '@vx/tooltip'
 import { localPoint } from '@vx/event'
 import {easeCubicInOut} from 'd3-ease'
 import sizeMe from 'react-sizeme'
 import Color from 'color'
+import fisheye from '../plugins/fisheye'
+import {scaleLinear, scalePow} from 'd3-scale'
+
+window.fisheye = fisheye
+window.scaleLinear = scaleLinear
+window.scalePow = scalePow
 
 
 const data = [
@@ -55,7 +61,7 @@ class Timeline extends Component {
       mouseOn: false,
       mouseX: 200,
       mouseY: 0,
-      deformation: 2
+      deformation: 0
     }
     this.start = null
     this.transitionTime = 300
@@ -69,12 +75,12 @@ class Timeline extends Component {
         start = timestamp
       }
       let time = timestamp - start
-      this.setState(prevState => {
-        let newState = {...prevState}
-        newState[property] = easeCubicInOut(time/duration) * value + (1 - easeCubicInOut(time/duration)) * startValue
-        return newState
-      })
       if (time < duration) {
+        this.setState(prevState => {
+          let newState = {...prevState}
+          newState[property] = easeCubicInOut(time/duration) * value + (1 - easeCubicInOut(time/duration)) * startValue
+          return newState
+        })
         window.requestAnimationFrame(animate)
       } else {
         this.setState(prevState => {
@@ -88,97 +94,59 @@ class Timeline extends Component {
 
   }
 
-  loop = (timestamp) => {
-    if (this.start === null) {
-      this.start = timestamp
-      this.startHeight = this.state.height
-      this.finalHeight = this.startHeight === this.minY ? this.maxY : this.minY
-    }
-    let time = timestamp - this.start
-    this.setState(prevState => {
-      return {...prevState,
-      height: easeCubicInOut(time/this.transitionTime) * this.finalHeight + (1 - easeCubicInOut(time/this.transitionTime)) * this.startHeight
-    }
-    })
-    if (time < this.transitionTime) {
-      window.requestAnimationFrame(this.loop)
-    } else {
-      this.setState(prevState => {return {...prevState, height: this.finalHeight}})
-      this.start = null
-      this.startHeight = 0
-    }
-
-  }
-
-  handleClick = (event, yScale) => {
-      // console.log(yScale)
-      // yScale.range(categoryKeys.map((d, i) => {
-      //     return interpolateRound(this.minY, this.state.height === 150 ? this.minY : 150)(i / categoryKeys.length)
-      //   }))
-      // let svg = select(ReactDOM.findDOMNode(this.svg))
-      // let axisDom = select('.vx-axis-left')
-      // let axis = axisLeft(yScale)
-      // console.log(axis)
-      // // let axisDom = select(ReactDOM.findDOMNode(this.axis))
-      // axisDom.transition(this.transition).call(axis).on('end', () => {
-      //   this.setState({height: this.state.height === 150 ? this.minY : 150})
-      // })
-
-      window.requestAnimationFrame( this.loop );
-
+  handleClick = (event) => {
+      this.tween('height', this.state.height === this.minY ? this.maxY : this.minY, this.transitionTime)
   }
 
   render() {
-    const bandwidth = 30
     const step = 100
     const paddingInner = 100
     const paddingOuter = 100
     const marginTop = 10
-    const marginLeft = 10
-    const xMax = Math.min(this.props.size.width, 490)
+    const marginLeft = 1
+    const xMax = this.props.width - marginLeft
     const xScale = scaleTime({
-      rangeRound: [0, xMax - marginLeft * 2],
+      rangeRound: [1, xMax - marginLeft * 2],
       domain: extent(data, d => d.time)
     })
-    window.xScale = xScale
     const xPowScale = scalePower({
-      range: [0, xMax - marginLeft * 2],
+      range: [0.1, xMax - marginLeft * 2],
       domain: [0.1, xMax - marginLeft * 2],
-    }).exponent(1.5)
-    window.xPowScale = xPowScale
+    }).exponent(1.1)
+
     const yScale = scaleOrdinal({
       domain: categoryKeys,
       range: categoryKeys.map((d, i) => {
         return interpolateRound(this.minY, this.state.height)(i / categoryKeys.length)
       })
     })
+    const yPowScale = scalePower({
+      range: [this.minY, this.state.height],
+      domain: [this.minY, this.state.height],
+    }).exponent(1)
     const zScale = scaleOrdinal({
       domain: categoryKeys,
-      range: categoryColors
+      range: categoryColors 
     })
-    window.yScale = yScale
-    window.zScale = zScale
-    function fisheye(x, scale, d, a) {
-      x = scale(x)
-      let left = x < a
-      let range = extent(scale.range())
-      let min = range[0]
-      let max = range[1]
-      let m = left ? a - min : max - a;
-      if (m === 0) m = max - min;
-      return (left ? -1 : 1) * m * (d + 1) / (d + (m / Math.abs(x - a))) + a;
-    }
-    const fisheyeX = (x) => {
-      return fisheye(x, xPowScale, this.state.deformation, this.state.mouseX - marginLeft)
-    }
     
+    const fisheyeX = fisheye.scale(scalePow().exponent(1.1).copy)
+                            .domain(xPowScale.domain())
+                            .range(xPowScale.range())
+                            .focus(this.state.mouseX - marginLeft)
+                            .distortion(this.state.deformation)
+
+    const fisheyeY = fisheye.scale(scalePow().exponent(1).copy)
+                            .domain(yPowScale.domain())
+                            .range(yPowScale.range())
+                            .focus(this.state.mouseY - marginTop)
+                            .distortion(this.state.deformation)
     return (
-      <div style={{width: '100%', maxWidth: '700px', margin: 'auto'}} >
-      <button className="pure-button" onClick={(e) => this.handleClick(e, yScale)}>Expand timeline</button><br />
+      <div style={{width: '100%', margin: 'auto', position: 'relative'}} >
+      <button className="pure-button" onClick={this.handleClick}>Expand timeline</button><br />
       <svg
         ref={s => (this.svg = s)}
-        width={Math.min(this.props.size.width, 500)}
-        height={this.props.height}
+        width={this.props.width}
+        height={this.state.height + marginTop + 100}
       >
         <Group className={cx('vx-bar-stack', this.props.className)} top={marginTop} left={marginLeft}
           onMouseEnter={event => {
@@ -207,7 +175,7 @@ class Timeline extends Component {
             })
           }}
         >
-          <rect x={0} y={0} width={500} height={400} opacity={0}></rect>
+          <rect x={0} y={0} width={this.props.width} height={this.state.height + marginTop + 100} opacity={0}></rect>
           <AxisLeft
             tickLabelProps={(value, index) => ({
               opacity: index === 0 ? 1 : (this.state.height - this.minY) / (150 - this.minY),
@@ -222,12 +190,19 @@ class Timeline extends Component {
             left={xMax / 2}
             top={-5}
           />
+          <AxisBottom
+            scale={xPowScale}
+            tickValues={xPowScale.ticks(15).map(x => fisheyeX(x))}
+            tickFormat={x => moment(xScale.invert(fisheyeX.invert(x))).format('YYYY')}
+            top={this.state.height + 40}
+          />
           {categoryKeys &&
             categoryKeys.map((key, i) => {
               return (
                 <Group key={`vx-bar-stack-${i}`} top={20}>
                   {data.filter(d => d[key]).map((d, ii) => {
                     const barHeight = fisheyeX(xScale(d.end)) - fisheyeX(xScale(d.time));
+                    const bandwidth = 30
                     return (
                       <Bar
                         key={`bar-group-bar-${i}-${ii}-${key}`}
@@ -237,7 +212,7 @@ class Timeline extends Component {
                         height={bandwidth}
                         fill={d.color ? d.color : zScale(key)}
                         stroke={Color(d.color ? d.color : zScale(key)).darken(.1)}
-                        rx={3}
+                        rx={0}
                         data={{
                           bandwidth,
                           paddingInner,
@@ -300,10 +275,11 @@ class Timeline extends Component {
       </svg>
       {this.props.tooltipOpen &&
           <Tooltip
-            top={this.props.tooltipTop + this.state.height * .8 + 75}
-            left={this.props.tooltipData.left - 30}
+            top={this.props.tooltipTop + this.state.height * .8 + 105}
+            left={this.props.tooltipData.left - 100 * this.props.tooltipData.left / this.props.width }
             style={{
               minWidth: 60,
+              maxWidth: 100,
               backgroundColor: 'white',
               color: '#333',
               border: '1px solid #555',
