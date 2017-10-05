@@ -21,7 +21,7 @@ class Menu extends Component {
         <ul className='pure-menu-list'>
           <BlogItem />
           <li className='contactLinks pure-menu-item pure-menu-has-children pure-menu-allow-hover'>
-            <button className='pure-menu-link'>Contact</button>
+            <div className='pure-menu-link'>Contact</div>
             <ul className='pure-menu-children'>
               <li className='pure-menu-item'>
                 <a
