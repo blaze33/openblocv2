@@ -7,7 +7,6 @@
     "@vx/vx": "^0.0.140",
     "autoprefixer": "7.1.4",
     "babel-core": "6.26.0",
-    "babel-eslint": "8.0.1",
     "babel-jest": "21.2.0",
     "babel-loader": "7.1.2",
     "babel-preset-react-app": "^3.0.3",
@@ -102,5 +101,12 @@
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "standard": {
+    "parser": "babel-eslint"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.1",
+    "standard": "*"
   }
 }
