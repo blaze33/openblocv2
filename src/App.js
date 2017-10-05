@@ -17,7 +17,10 @@ class App extends Component {
               <div className="pure-g">
                 <div className="pure-u-1 pure-u-md-1-3">
                   <img style={{borderRadius: "50%", maxWidth: '75%'}}
-                    src="https://www.gravatar.com/avatar/e5245156ef88ce267e06145a8c777277?s=200&d=mm&r=x" />
+                    src="https://www.gravatar.com/avatar/e5245156ef88ce267e06145a8c777277?s=200&d=mm&r=x"
+                    alt=''
+                    />
+
                 </div>
                 <div className="pure-u-1 pure-u-md-2-3">
                   <p>

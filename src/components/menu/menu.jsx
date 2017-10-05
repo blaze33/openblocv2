@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import FaLinkedin from 'react-icons/lib/fa/linkedin'
 import FaGithub from 'react-icons/lib/fa/github'
 import FaTwitter from 'react-icons/lib/fa/twitter'
-import FaInstagram from 'react-icons/lib/fa/instagram'
 import FaEnvelope from 'react-icons/lib/fa/envelope'
 
 import logo from '../../images/logo.png'
@@ -15,14 +14,14 @@ class Menu extends Component {
   render() {
     return (
     <div className="AppHeader pure-menu pure-menu-horizontal">
-      <a href="#" className="pure-menu-heading pure-menu-link">
+      <a href="/" className="pure-menu-heading pure-menu-link">
         <img src={logo} className="App-logo" alt="logo" />
         Openbloc
       </a>
       <ul className="pure-menu-list">
         <BlogItem />
         <li className="contactLinks pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-          <a href="#" className="pure-menu-link">Contact</a>
+          <button className="pure-menu-link">Contact</button>
           <ul className="pure-menu-children">
             <li className="pure-menu-item">
               <a
@@ -60,7 +59,7 @@ class Menu extends Component {
                 className='pure-menu-link'
                 href="https://www.instagram.com/maxmre/"
                 title="Instagram">
-                  <img src={InstagramIcon} /> @maxmre
+                  <img src={InstagramIcon} alt='Instagram'/> @maxmre
               </a>
             </li>
             <li className="pure-menu-item">
@@ -68,7 +67,7 @@ class Menu extends Component {
                 className='pure-menu-link icon-stackoverflow'
                 href="https://stackoverflow.com/users/343834/maxime-r"
                 title="Stackoverflow">
-                  <img src={StackoverflowIcon} /> Stackoverflow
+                  <img src={StackoverflowIcon} alt='Stackoverflow'/> Stackoverflow
               </a>
             </li>
             <li className="pure-menu-item">
@@ -76,7 +75,7 @@ class Menu extends Component {
                 className='pure-menu-link icon-careers'
                 href="https://stackoverflow.com/story/maxmre "
                 title="Developer story">
-                  <img src={careersIcon} />Developer Story
+                  <img src={careersIcon} alt='Developer story'/>Developer Story
               </a>
             </li>
           </ul>

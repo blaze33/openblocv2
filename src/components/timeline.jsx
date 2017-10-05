@@ -120,10 +120,7 @@ class Timeline extends Component {
         return interpolateRound(this.minY, this.state.height)(i / categoryKeys.length)
       })
     })
-    const yPowScale = scalePower({
-      range: [this.minY, this.state.height],
-      domain: [this.minY, this.state.height],
-    }).exponent(1)
+
     const zScale = scaleOrdinal({
       domain: categoryKeys,
       range: categoryColors 
@@ -135,11 +132,6 @@ class Timeline extends Component {
                             .focus(this.state.mouseX - marginLeft)
                             .distortion(this.state.deformation)
 
-    const fisheyeY = fisheye.scale(scalePow().exponent(1).copy)
-                            .domain(yPowScale.domain())
-                            .range(yPowScale.range())
-                            .focus(this.state.mouseY - marginTop)
-                            .distortion(this.state.deformation)
     return (
       <div style={{width: '100%', margin: 'auto', position: 'relative'}} >
       <button className="pure-button" onClick={this.handleClick}>Expand timeline</button><br />
@@ -227,7 +219,7 @@ class Timeline extends Component {
                           data: d,
                         }}
                         onMouseMove={data => event => {
-                          const { x, y } = localPoint(this.svg, event);
+                          const { x } = localPoint(this.svg, event);
                           // console.log(x, y, this.fisheye)
                           const x0 = xScale.invert(xPowScale.invert(x - marginLeft));
                           this.props.showTooltip({
@@ -240,7 +232,7 @@ class Timeline extends Component {
                           this.props.hideTooltip()
                         }}
                         onTouchMove={data => event => {
-                          const { x, y } = localPoint(this.svg, event.touches[0]);
+                          const { x } = localPoint(this.svg, event.touches[0]);
                           // console.log(x, y, this.fisheye)
                           const x0 = xScale.invert(xPowScale.invert(x -  marginLeft));
                           console.log(x0, xScale(x0))

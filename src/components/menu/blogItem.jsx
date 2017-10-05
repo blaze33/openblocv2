@@ -33,7 +33,7 @@ class Menu extends Component {
   render() {
     return (
         <li className="blogLinks pure-menu-item pure-menu-has-children pure-menu-allow-hover">
-          <a href='#' className="pure-menu-link">Blog</a>
+          <button className="pure-menu-link">Blog</button>
           <ul className="pure-menu-children">
             <li className="pure-menu-item">
               <a href={blogUrl} className="pure-menu-link">
