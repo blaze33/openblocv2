@@ -1,23 +1,20 @@
-import React, { Component } from 'react'
-import { Line, Bar } from '@vx/shape'
-import { scaleTime, scaleOrdinal, scalePower } from '@vx/scale'
-import { extent } from 'd3-array'
-import moment from 'moment'
-import { interpolateRound } from 'd3-interpolate'
-import { Group } from '@vx/group'
 import cx from 'classnames'
-import { AxisLeft, AxisBottom } from '@vx/axis'
-import { withTooltip, Tooltip } from '@vx/tooltip'
-import { localPoint } from '@vx/event'
-import { easeCubicInOut } from 'd3-ease'
-import sizeMe from 'react-sizeme'
 import Color from 'color'
-import fisheye from '../plugins/fisheye'
-import { scaleLinear, scalePow } from 'd3-scale'
+import moment from 'moment'
+import React, { Component } from 'react'
+import sizeMe from 'react-sizeme'
+import { AxisLeft, AxisBottom } from '@vx/axis'
+import { localPoint } from '@vx/event'
+import { Group } from '@vx/group'
+import { scaleTime, scaleOrdinal, scalePower } from '@vx/scale'
+import { Line, Bar } from '@vx/shape'
+import { withTooltip, Tooltip } from '@vx/tooltip'
+import { extent } from 'd3-array'
+import { easeCubicInOut } from 'd3-ease'
+import { interpolateRound } from 'd3-interpolate'
+import { scalePow } from 'd3-scale'
 
-window.fisheye = fisheye
-window.scaleLinear = scaleLinear
-window.scalePow = scalePow
+import fisheye from '../plugins/fisheye'
 
 const data = [
   { time: moment('1983-11-03'), life: 'Still alive !', 'end': moment() },
@@ -40,12 +37,9 @@ const data = [
   { time: moment('2017-01-01'), now: '2017', end: moment() },
   { time: moment(), now: 'now', end: moment() }
 ]
-window.data = data
-window.moment = moment
 
 const categoryKeys = [ 'now', 'entrepreneurship', 'work', 'education', 'life' ].reverse()
 const categoryColors = [ '#A7DBD8', '#69D2E7', '#E0E4CC', '#FA6900', '#f8eacb' ].reverse()
-window.categoryKeys = categoryKeys
 
 class Timeline extends Component {
   constructor (props) {
@@ -62,6 +56,33 @@ class Timeline extends Component {
     }
     this.start = null
     this.transitionTime = 300
+    this.step = 100
+    this.paddingInner = 100
+    this.paddingOuter = 100
+    this.marginTop = 10
+    this.marginLeft = 1
+    this.zScale = scaleOrdinal({
+      domain: categoryKeys,
+      range: categoryColors
+    })
+    this.fisheye = fisheye.scale(scalePow().exponent(1.1).copy)
+    this.xMax = this.props.width - this.marginLeft
+    this.xScale = scaleTime({
+      rangeRound: [1, this.xMax - this.marginLeft * 2],
+      domain: extent(data, d => d.time)
+    })
+    this.xPowScale = scalePower({
+      range: [0.1, this.xMax - this.marginLeft * 2],
+      domain: [0.1, this.xMax - this.marginLeft * 2]
+    }).exponent(1.1)
+
+    this.yScale = scaleOrdinal({
+      domain: categoryKeys,
+      range: categoryKeys.map((d, i) => {
+        return interpolateRound(this.minY, this.state.height)(i / categoryKeys.length)
+      })
+    })
+    this.setupScales()
   }
 
   tween = (property, value, duration) => {
@@ -94,56 +115,44 @@ class Timeline extends Component {
     this.tween('height', this.state.height === this.minY ? this.maxY : this.minY, this.transitionTime)
   }
 
+  componentWillUpdate (nextProps) {
+    this.setupScales()
+  }
+
+  setupScales = () => {
+    this.xMax = this.props.width - this.marginLeft
+    this.xScale.rangeRound([1, this.xMax - this.marginLeft * 2])
+    this.xPowScale.range([0.1, this.xMax - this.marginLeft * 2])
+                  .domain([0.1, this.xMax - this.marginLeft * 2])
+
+    this.yScale.range(categoryKeys.map(
+                  (d, i) => interpolateRound(this.minY, this.state.height)(i / categoryKeys.length))
+               )
+               .domain(categoryKeys)
+
+    this.fisheyeX = this.fisheye.domain(this.xPowScale.domain())
+                                .range(this.xPowScale.range())
+                                .focus(this.state.mouseX - this.marginLeft)
+                                .distortion(this.state.deformation)
+  }
+
   render () {
-    const step = 100
-    const paddingInner = 100
-    const paddingOuter = 100
-    const marginTop = 10
-    const marginLeft = 1
-    const xMax = this.props.width - marginLeft
-    const xScale = scaleTime({
-      rangeRound: [1, xMax - marginLeft * 2],
-      domain: extent(data, d => d.time)
-    })
-    const xPowScale = scalePower({
-      range: [0.1, xMax - marginLeft * 2],
-      domain: [0.1, xMax - marginLeft * 2]
-    }).exponent(1.1)
-
-    const yScale = scaleOrdinal({
-      domain: categoryKeys,
-      range: categoryKeys.map((d, i) => {
-        return interpolateRound(this.minY, this.state.height)(i / categoryKeys.length)
-      })
-    })
-
-    const zScale = scaleOrdinal({
-      domain: categoryKeys,
-      range: categoryColors
-    })
-
-    const fisheyeX = fisheye.scale(scalePow().exponent(1.1).copy)
-                            .domain(xPowScale.domain())
-                            .range(xPowScale.range())
-                            .focus(this.state.mouseX - marginLeft)
-                            .distortion(this.state.deformation)
-
     return (
       <div style={{width: '100%', margin: 'auto', position: 'relative'}} >
         <button className='pure-button' onClick={this.handleClick}>Expand timeline</button><br />
         <svg
           ref={s => (this.svg = s)}
           width={this.props.width}
-          height={this.state.height + marginTop + 100}
+          height={this.state.height + this.marginTop + 100}
       >
-          <Group className={cx('vx-bar-stack', this.props.className)} top={marginTop} left={marginLeft}
+          <Group className={cx('vx-bar-stack', this.props.className)} top={this.marginTop} left={this.marginLeft}
             onMouseEnter={event => {
               this.tween('deformation', this.maxDeformation, 500)
             }}
             onMouseMove={event => {
               const {x, y} = localPoint(this.svg, event)
               this.setState(prevState => {
-                return {...prevState, mouseX: Math.min(xScale.range()[1] + marginLeft, Math.max(x, marginLeft)), mouseY: y}
+                return {...prevState, mouseX: Math.min(this.xScale.range()[1] + this.marginLeft, Math.max(x, this.marginLeft)), mouseY: y}
               })
             }}
             onMouseLeave={event => {
@@ -153,17 +162,17 @@ class Timeline extends Component {
               this.tween('deformation', this.maxDeformation, 500)
               const {x, y} = localPoint(this.svg, event.touches[0])
               this.setState(prevState => {
-                return {...prevState, mouseX: Math.min(xScale.range()[1] + marginLeft, Math.max(x, marginLeft)), mouseY: y}
+                return {...prevState, mouseX: Math.min(this.xScale.range()[1] + this.marginLeft, Math.max(x, this.marginLeft)), mouseY: y}
               })
             }}
             onTouchMove={event => {
               const {x, y} = localPoint(this.svg, event.touches[0])
               this.setState(prevState => {
-                return {...prevState, mouseX: Math.min(xScale.range()[1] + marginLeft, Math.max(x, marginLeft)), mouseY: y}
+                return {...prevState, mouseX: Math.min(this.xScale.range()[1] + this.marginLeft, Math.max(x, this.marginLeft)), mouseY: y}
               })
             }}
         >
-            <rect x={0} y={0} width={this.props.width} height={this.state.height + marginTop + 100} opacity={0} />
+            <rect x={0} y={0} width={this.props.width} height={this.state.height + this.marginTop + 100} opacity={0} />
             <AxisLeft
               tickLabelProps={(value, index) => ({
                 opacity: index === 0 ? 1 : (this.state.height - this.minY) / (150 - this.minY),
@@ -174,14 +183,14 @@ class Timeline extends Component {
                 fontSize: 14,
                 fill: 'black'
               })}
-              scale={yScale}
-              left={xMax / 2}
+              scale={this.yScale}
+              left={this.xMax / 2}
               top={-5}
           />
             <AxisBottom
-              scale={xPowScale}
-              tickValues={xPowScale.ticks(15).map(x => fisheyeX(x))}
-              tickFormat={x => moment(xScale.invert(fisheyeX.invert(x))).format('YYYY')}
+              scale={this.xPowScale}
+              tickValues={this.xPowScale.ticks(15).map(x => this.fisheyeX(x))}
+              tickFormat={x => moment(this.xScale.invert(this.fisheyeX.invert(x))).format('YYYY')}
               top={this.state.height + 40}
           />
             {categoryKeys &&
@@ -189,23 +198,23 @@ class Timeline extends Component {
               return (
                 <Group key={`vx-bar-stack-${i}`} top={20}>
                   {data.filter(d => d[key]).map((d, ii) => {
-                    const barHeight = fisheyeX(xScale(d.end)) - fisheyeX(xScale(d.time))
+                    const barHeight = this.fisheyeX(this.xScale(d.end)) - this.fisheyeX(this.xScale(d.time))
                     const bandwidth = 30
                     return (
                       <Bar
                         key={`bar-group-bar-${i}-${ii}-${key}`}
-                        x={fisheyeX(xScale(d.time))}
-                        y={yScale(key) - bandwidth / 2}
+                        x={this.fisheyeX(this.xScale(d.time))}
+                        y={this.yScale(key) - bandwidth / 2}
                         width={barHeight}
                         height={bandwidth}
-                        fill={d.color ? d.color : zScale(key)}
-                        stroke={Color(d.color ? d.color : zScale(key)).darken(0.1)}
+                        fill={d.color ? d.color : this.zScale(key)}
+                        stroke={Color(d.color ? d.color : this.zScale(key)).darken(0.1)}
                         rx={0}
                         data={{
                           bandwidth,
-                          paddingInner,
-                          paddingOuter,
-                          step,
+                          paddingInner: this.paddingInner,
+                          paddingOuter: this.paddingOuter,
+                          step: this.step,
                           key: key,
                           value: d[key],
                           height: barHeight,
@@ -216,12 +225,11 @@ class Timeline extends Component {
                         }}
                         onMouseMove={data => event => {
                           const { x } = localPoint(this.svg, event)
-                          // console.log(x, y, this.fisheye)
-                          const x0 = xScale.invert(xPowScale.invert(x - marginLeft))
+                          const x0 = this.xScale.invert(this.xPowScale.invert(x - this.marginLeft))
                           this.props.showTooltip({
                             tooltipData: {x0, left: event.clientX, ...data},
-                            tooltipTop: yScale(0),
-                            tooltipLeft: xPowScale(xScale(x0))
+                            tooltipTop: this.yScale(0),
+                            tooltipLeft: this.xPowScale(this.xScale(x0))
                           })
                         }}
                         onMouseLeave={data => event => {
@@ -229,13 +237,11 @@ class Timeline extends Component {
                         }}
                         onTouchMove={data => event => {
                           const { x } = localPoint(this.svg, event.touches[0])
-                          // console.log(x, y, this.fisheye)
-                          const x0 = xScale.invert(xPowScale.invert(x - marginLeft))
-                          console.log(x0, xScale(x0))
+                          const x0 = this.xScale.invert(this.xPowScale.invert(x - this.marginLeft))
                           this.props.showTooltip({
                             tooltipData: {x0, left: event.clientX, ...data},
-                            tooltipTop: yScale(0),
-                            tooltipLeft: xPowScale(xScale(x0))
+                            tooltipTop: this.yScale(0),
+                            tooltipLeft: this.xPowScale(this.xScale(x0))
                           })
                         }}
                         onTouchEnd={data => event => {
@@ -251,7 +257,7 @@ class Timeline extends Component {
             {this.props.tooltipOpen && <g>
               <Line
                 from={{ x: this.props.tooltipLeft, y: this.props.tooltipTop }}
-                to={{ x: this.props.tooltipLeft, y: Math.max(marginTop + this.state.height, 50) + this.props.tooltipTop }}
+                to={{ x: this.props.tooltipLeft, y: Math.max(this.marginTop + this.state.height, 50) + this.props.tooltipTop }}
                 stroke='#666'
                 strokeWidth={2}
                 style={{ pointerEvents: 'none' }}
