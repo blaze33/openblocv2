@@ -1,4 +1,4 @@
-import * as d3 from 'd3'
+import { extent } from 'd3-array'
 
 const fisheye = {
   scale: function (scaleType) {
@@ -53,7 +53,7 @@ function d3FisheyeScale (scale, d, a) {
   function fisheye (_) {
     let x = scale(_)
     let left = x < a
-    let range = d3.extent(scale.range())
+    let range = extent(scale.range())
     let min = range[0]
     let max = range[1]
     let m = left ? a - min : max - a
@@ -63,7 +63,7 @@ function d3FisheyeScale (scale, d, a) {
 
   fisheye.invert = function (xf) {
     let left = xf < a
-    let range = d3.extent(scale.range())
+    let range = extent(scale.range())
     let min = range[0]
     let max = range[1]
     let m = left ? a - min : max - a
