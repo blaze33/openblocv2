@@ -231,7 +231,7 @@ class Timeline extends Component {
                           const x0 = this.xScale.invert(this.fisheyeX.invert(x - this.marginLeft))
                           this.props.showTooltip({
                             tooltipData: {x0, left: event.clientX, ...data},
-                            tooltipTop: this.yScale(0),
+                            tooltipTop: this.yScale('life'),
                             tooltipLeft: this.xPowScale(this.xScale(x0))
                           })
                         }}
@@ -259,10 +259,10 @@ class Timeline extends Component {
 
             {this.props.tooltipOpen && <g>
               <Line
-                from={{ x: this.props.tooltipLeft, y: this.props.tooltipTop }}
-                to={{ x: this.props.tooltipLeft, y: Math.max(this.marginTop + this.state.height, 50) + this.props.tooltipTop }}
+                from={{ x: this.props.tooltipLeft, y: this.props.tooltipTop + 5}}
+                to={{ x: this.props.tooltipLeft, y: Math.max(this.marginTop + this.state.height, 50) + this.props.tooltipTop + 17}}
                 stroke='#666'
-                strokeWidth={2}
+                strokeWidth={1}
                 style={{ pointerEvents: 'none' }}
                 strokeDasharray='2,2'
               />
@@ -273,7 +273,7 @@ class Timeline extends Component {
         {this.props.tooltipOpen &&
         <Tooltip
           top={this.props.tooltipTop + this.state.height * 0.8}
-          left={this.props.tooltipData.left - 100 * this.props.tooltipData.left / this.props.width}
+          left={this.props.tooltipData.left - 60 * this.props.tooltipData.left / this.props.width}
           style={{
             minWidth: 60,
             maxWidth: 100,
