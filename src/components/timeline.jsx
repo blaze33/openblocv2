@@ -5,6 +5,7 @@ import React, { Component } from 'react'
 import sizeMe from 'react-sizeme'
 import { AxisLeft, AxisBottom } from '@vx/axis'
 import { localPoint } from '@vx/event'
+import { GridColumns } from '@vx/grid'
 import { Group } from '@vx/group'
 import { scaleTime, scaleOrdinal, scalePower } from '@vx/scale'
 import { Line, Bar } from '@vx/shape'
@@ -120,7 +121,7 @@ class Timeline extends Component {
   }
 
   setupScales = () => {
-    this.xMax = this.props.width - this.marginLeft
+    this.xMax = this.props.width - this.marginLeft * 2
     this.xScale.rangeRound([1, this.xMax - this.marginLeft * 2])
     this.xPowScale.range([0.1, this.xMax - this.marginLeft * 2])
                   .domain([0.1, this.xMax - this.marginLeft * 2])
@@ -144,41 +145,40 @@ class Timeline extends Component {
           ref={s => (this.svg = s)}
           width={this.props.width}
           height={this.state.height + this.marginTop + 100}
-      >
-          <Group className={cx('vx-bar-stack', this.props.className)} top={this.marginTop} left={this.marginLeft}
-            onMouseEnter={event => {
-              this.tween('deformation', this.maxDeformation, 500)
-            }}
-            onMouseMove={event => {
-              const {x, y} = localPoint(this.svg, event)
-              this.setState(prevState => {
-                return {...prevState, mouseX: Math.min(this.xScale.range()[1] + this.marginLeft, Math.max(x, this.marginLeft)), mouseY: y}
-              })
-            }}
-            onMouseLeave={event => {
-              this.tween('deformation', 0, 300)
-            }}
-            onTouchStart={event => {
-              this.tween('deformation', this.maxDeformation, 500)
-              const {x, y} = localPoint(this.svg, event.touches[0])
-              this.setState(prevState => {
-                return {...prevState, mouseX: Math.min(this.xScale.range()[1] + this.marginLeft, Math.max(x, this.marginLeft)), mouseY: y}
-              })
-            }}
-            onTouchMove={event => {
-              const {x, y} = localPoint(this.svg, event.touches[0])
-              this.setState(prevState => {
-                return {...prevState, mouseX: Math.min(this.xScale.range()[1] + this.marginLeft, Math.max(x, this.marginLeft)), mouseY: y}
-              })
-            }}
+          onMouseEnter={event => {
+            this.tween('deformation', this.maxDeformation, 500)
+          }}
+          onMouseMove={event => {
+            const {x, y} = localPoint(this.svg, event)
+            this.setState(prevState => {
+              return {...prevState, mouseX: Math.min(this.xScale.range()[1] + this.marginLeft, Math.max(x, this.marginLeft)), mouseY: y}
+            })
+          }}
+          onMouseLeave={event => {
+            this.tween('deformation', 0, 500)
+          }}
+          onTouchStart={event => {
+            this.tween('deformation', this.maxDeformation, 500)
+            const {x, y} = localPoint(this.svg, event.touches[0])
+            this.setState(prevState => {
+              return {...prevState, mouseX: Math.min(this.xScale.range()[1] + this.marginLeft, Math.max(x, this.marginLeft)), mouseY: y}
+            })
+          }}
+          onTouchMove={event => {
+            const {x, y} = localPoint(this.svg, event.touches[0])
+            this.setState(prevState => {
+              return {...prevState, mouseX: Math.min(this.xScale.range()[1] + this.marginLeft, Math.max(x, this.marginLeft)), mouseY: y}
+            })
+          }}
         >
-            <rect x={0} y={0} width={this.props.width} height={this.state.height + this.marginTop + 100} opacity={0} />
+          <rect x={0} y={0} width={this.props.width} height={this.state.height + this.marginTop + 100} opacity={1} fill='#fff' />
+          <Group className={cx('vx-bar-stack', this.props.className)} top={this.marginTop} left={this.marginLeft}>
             <AxisLeft
               tickLabelProps={(value, index) => ({
                 opacity: index === 0 ? 1 : (this.state.height - this.minY) / (150 - this.minY),
-                dx: '-0.25em',
+                dx: '-2em',
                 dy: '0.25em',
-                textAnchor: 'end',
+                textAnchor: 'start',
                 fontFamily: 'sans-serif',
                 fontSize: 14,
                 fill: 'black'
@@ -186,24 +186,27 @@ class Timeline extends Component {
               scale={this.yScale}
               left={this.xMax / 2}
               top={-5}
-          />
+            />
+            <GridColumns scale={this.fisheyeX} numTicks={15} top={20} left={this.marginLeft} height={this.state.height - this.minY + 35} />
             <AxisBottom
-              scale={this.xPowScale}
-              tickValues={this.xPowScale.ticks(15).map(x => this.fisheyeX(x))}
-              tickFormat={x => moment(this.xScale.invert(this.fisheyeX.invert(x))).format('YYYY')}
+              scale={this.fisheyeX}
+              tickValues={this.fisheyeX.ticks(15)}
+              tickFormat={x => moment(this.xScale.invert(x)).format('YYYY')}
               top={this.state.height + 40}
-          />
+              left={this.marginLeft}
+            />
             {categoryKeys &&
             categoryKeys.map((key, i) => {
               return (
                 <Group key={`vx-bar-stack-${i}`} top={20}>
                   {data.filter(d => d[key]).map((d, ii) => {
-                    const barHeight = this.fisheyeX(this.xScale(d.end)) - this.fisheyeX(this.xScale(d.time))
+                    const x1 = this.fisheyeX(this.xScale(d.time))
+                    const barHeight = this.fisheyeX(this.xScale(d.end)) - x1
                     const bandwidth = 30
                     return (
                       <Bar
                         key={`bar-group-bar-${i}-${ii}-${key}`}
-                        x={this.fisheyeX(this.xScale(d.time))}
+                        x={x1}
                         y={this.yScale(key) - bandwidth / 2}
                         width={barHeight}
                         height={bandwidth}
@@ -225,7 +228,7 @@ class Timeline extends Component {
                         }}
                         onMouseMove={data => event => {
                           const { x } = localPoint(this.svg, event)
-                          const x0 = this.xScale.invert(this.xPowScale.invert(x - this.marginLeft))
+                          const x0 = this.xScale.invert(this.fisheyeX.invert(x - this.marginLeft))
                           this.props.showTooltip({
                             tooltipData: {x0, left: event.clientX, ...data},
                             tooltipTop: this.yScale(0),
@@ -269,7 +272,7 @@ class Timeline extends Component {
         </svg>
         {this.props.tooltipOpen &&
         <Tooltip
-          top={this.props.tooltipTop + this.state.height * 0.8 + 105}
+          top={this.props.tooltipTop + this.state.height * 0.8}
           left={this.props.tooltipData.left - 100 * this.props.tooltipData.left / this.props.width}
           style={{
             minWidth: 60,

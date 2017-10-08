@@ -22,7 +22,7 @@ class App extends Component {
                     />
 
                 </div>
-                <div className='pure-u-1 pure-u-md-2-3'>
+                <div className='pure-u-1 pure-u-md-2-3' style={{textAlign: 'left'}}>
                   <p>
                     Hi! I'm Maxime Rouyrre. I'm an Entrepreneur, UX Designer & Full-stack Web Engineer.
                   </p><p>
