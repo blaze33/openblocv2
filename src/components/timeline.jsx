@@ -227,10 +227,10 @@ class Timeline extends Component {
                           data: d
                         }}
                         onMouseMove={data => event => {
-                          const { x } = localPoint(this.svg, event)
+                          const { x, y } = localPoint(this.svg, event)
                           const x0 = this.xScale.invert(this.fisheyeX.invert(x - this.marginLeft))
                           this.props.showTooltip({
-                            tooltipData: {x0, left: event.clientX, ...data},
+                            tooltipData: {x0, left: event.clientX, top: y, ...data},
                             tooltipTop: this.yScale('life'),
                             tooltipLeft: this.xPowScale(this.xScale(x0))
                           })
@@ -272,7 +272,7 @@ class Timeline extends Component {
         </svg>
         {this.props.tooltipOpen &&
         <Tooltip
-          top={this.props.tooltipTop + this.state.height * 0.8}
+          top={this.props.tooltipData.top + 60}
           left={this.props.tooltipData.left - 60 * this.props.tooltipData.left / this.props.width}
           style={{
             minWidth: 60,
