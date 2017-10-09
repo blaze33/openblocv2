@@ -135,6 +135,7 @@ class Timeline extends Component {
                                 .range(this.xPowScale.range())
                                 .focus(this.state.mouseX - this.marginLeft)
                                 .distortion(this.state.deformation)
+    this.fisheyeX.ticks = (n) => this.xScale.ticks(n).map((d) => this.xScale(d))
   }
 
   render () {
@@ -190,8 +191,8 @@ class Timeline extends Component {
             <GridColumns scale={this.fisheyeX} numTicks={15} top={20} left={this.marginLeft} height={this.state.height - this.minY + 35} />
             <AxisBottom
               scale={this.fisheyeX}
-              tickValues={this.fisheyeX.ticks(15)}
               tickFormat={x => moment(this.xScale.invert(x)).format('YYYY')}
+              numTicks={15}
               top={this.state.height + 40}
               left={this.marginLeft}
             />
