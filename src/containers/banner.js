@@ -29,7 +29,7 @@ import bannerJPG from '../images/banner-6.jpg'
 class Banner extends Component {
   handleClick = event => {
     const line = d3.line().x(x => x.x).y(y => y.y)
-    const rect = line([{x: 0, y: 0}, {x: 1600, y: 0}, {x: 1600, y: 900}, {x: 0, y: 900}, {x: 0, y: 0}]) + 'Z'
+    const rect = line([{x: -10, y: -10}, {x: 1610, y: -10}, {x: 1610, y: 910}, {x: -10, y: 910}, {x: -10, y: -10}]) + 'Z'
     d3.selectAll('path.small')
       .transition()
       .duration(300)
@@ -99,7 +99,15 @@ class Banner extends Component {
             textAlign: 'center'
           }}
         >
-          <Link to={`${process.env.PUBLIC_URL}/home`} onClick={e => e.preventDefault()}><h1>Openbloc</h1></Link>
+          <Link
+            to={`${process.env.PUBLIC_URL}/home`}
+            onClick={e => e.preventDefault()}
+            style={{
+              color: 'black',
+              textDecoration: 'none',
+              fontSize: '1.5em'
+            }}
+          ><h1>Openbloc</h1></Link>
         </div>
       </div>
     )
