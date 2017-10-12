@@ -36,6 +36,8 @@ class Banner extends Component {
       .style('opacity', 0)
       .remove()
 
+    d3.select('a').transition().delay(500).duration(500).style('opacity', 0)
+
     d3.select('path.big')
       .attr('stroke-dasharray', null)
       .transition()
@@ -49,7 +51,11 @@ class Banner extends Component {
 
   render () {
     return (
-      <div style={{overflow: 'hidden', width: '100%', height: '100vh', position: 'relative'}} onClick={this.handleClick}>
+      <div
+        style={{overflow: 'hidden', width: '100%', height: '100vh', position: 'relative'}}
+        onClick={this.handleClick}
+        className='banner'
+      >
         <svg viewBox='0 0 1600 900'
           style={{
             width: '100vw',
