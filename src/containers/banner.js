@@ -45,7 +45,7 @@ class Banner extends Component {
       .attrTween('d', function (d) {
         return interpolatePath(d3.select(this).attr('d'), rect)
       })
-      .on('end', () => this.props.history.push('/home'))
+      .on('end', () => this.props.history.push(`${process.env.PUBLIC_URL}/home`))
   }
 
   render () {
@@ -100,7 +100,7 @@ class Banner extends Component {
             textAlign: 'center'
           }}
         >
-          <Link to='/home' onClick={e => e.preventDefault()}><h1>Openbloc</h1></Link>
+          <Link to={`${process.env.PUBLIC_URL}/home`} onClick={e => e.preventDefault()}><h1>Openbloc</h1></Link>
         </div>
       </div>
     )
