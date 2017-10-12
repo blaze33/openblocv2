@@ -188,10 +188,16 @@ class Timeline extends Component {
               left={this.xMax / 2}
               top={-5}
             />
-            <GridColumns scale={this.fisheyeX} numTicks={15} top={20} left={this.marginLeft} height={this.state.height - this.minY + 35} />
+            <GridColumns
+              scale={this.fisheyeX}
+              numTicks={15}
+              top={20}
+              left={this.marginLeft}
+              height={this.state.height - this.minY + 35}
+            />
             <AxisBottom
               scale={this.fisheyeX}
-              tickFormat={x => moment(this.xScale.invert(x)).format('YYYY')}
+              tickFormat={x => moment(this.xScale.invert(x)).add(1, 'months').startOf('year').format('YYYY')}
               numTicks={15}
               top={this.state.height + 40}
               left={this.marginLeft}
@@ -260,8 +266,8 @@ class Timeline extends Component {
 
             {this.props.tooltipOpen && <g>
               <Line
-                from={{ x: this.props.tooltipLeft, y: this.props.tooltipTop + 5}}
-                to={{ x: this.props.tooltipLeft, y: Math.max(this.marginTop + this.state.height, 50) + this.props.tooltipTop + 17}}
+                from={{ x: this.props.tooltipLeft, y: this.props.tooltipTop + 5 }}
+                to={{ x: this.props.tooltipLeft, y: Math.max(this.marginTop + this.state.height, 50) + this.props.tooltipTop + 17 }}
                 stroke='#666'
                 strokeWidth={1}
                 style={{ pointerEvents: 'none' }}

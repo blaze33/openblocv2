@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import { Link } from 'react-router-dom'
 import FaLinkedin from 'react-icons/lib/fa/linkedin'
 import FaGithub from 'react-icons/lib/fa/github'
 import FaTwitter from 'react-icons/lib/fa/twitter'
@@ -14,10 +15,10 @@ class Menu extends Component {
   render () {
     return (
       <div className='AppHeader pure-menu pure-menu-horizontal'>
-        <a href='/' className='pure-menu-heading pure-menu-link'>
+        <Link to='/' className='pure-menu-heading pure-menu-link'>
           <img src={logo} className='App-logo' alt='logo' />
-        Openbloc
-      </a>
+          Openbloc
+        </Link>
         <ul className='pure-menu-list'>
           <BlogItem />
           <li className='contactLinks pure-menu-item pure-menu-has-children pure-menu-allow-hover'>
