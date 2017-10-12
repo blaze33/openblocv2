@@ -174,6 +174,13 @@ class Timeline extends Component {
         >
           <rect x={0} y={0} width={this.props.width} height={this.state.height + this.marginTop + 100} opacity={1} fill='#fff' />
           <Group className={cx('vx-bar-stack', this.props.className)} top={this.marginTop} left={this.marginLeft}>
+            <GridColumns
+              scale={this.fisheyeX}
+              numTicks={15}
+              top={20}
+              left={this.marginLeft}
+              height={this.state.height - this.minY + 35}
+            />
             <AxisLeft
               tickLabelProps={(value, index) => ({
                 opacity: index === 0 ? 1 : (this.state.height - this.minY) / (150 - this.minY),
@@ -187,13 +194,6 @@ class Timeline extends Component {
               scale={this.yScale}
               left={this.xMax / 2}
               top={-5}
-            />
-            <GridColumns
-              scale={this.fisheyeX}
-              numTicks={15}
-              top={20}
-              left={this.marginLeft}
-              height={this.state.height - this.minY + 35}
             />
             <AxisBottom
               scale={this.fisheyeX}
