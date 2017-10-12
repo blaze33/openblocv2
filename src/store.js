@@ -4,8 +4,7 @@ import thunk from 'redux-thunk'
 import createHistory from 'history/createBrowserHistory'
 import rootReducer from './modules'
 
-console.log(process.env)
-export const history = createHistory({basename: process.env.PUBLIC_URL})
+export const history = createHistory()
 
 const initialState = {}
 const enhancers = []
