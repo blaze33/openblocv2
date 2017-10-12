@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
-import sizeMe from 'react-sizeme'
 import Home from '../containers/home'
 import Banner from '../containers/banner'
 
@@ -15,4 +14,4 @@ class App extends Component {
   }
 }
 
-export default sizeMe()(App)
+export default App
