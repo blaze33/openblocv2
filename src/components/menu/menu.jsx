@@ -15,7 +15,7 @@ class Menu extends Component {
   render () {
     return (
       <div className='AppHeader pure-menu pure-menu-horizontal'>
-        <Link to='/' className='pure-menu-heading pure-menu-link'>
+        <Link to={`${process.env.PUBLIC_URL}/`} className='pure-menu-heading pure-menu-link'>
           <img src={logo} className='App-logo' alt='logo' />
           Openbloc
         </Link>

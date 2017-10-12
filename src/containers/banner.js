@@ -28,7 +28,6 @@ import bannerJPG from '../images/banner-6.jpg'
 
 class Banner extends Component {
   handleClick = event => {
-    console.log(this.props)
     const line = d3.line().x(x => x.x).y(y => y.y)
     const rect = line([{x: 0, y: 0}, {x: 1600, y: 0}, {x: 1600, y: 900}, {x: 0, y: 900}, {x: 0, y: 0}]) + 'Z'
     d3.selectAll('path.small')

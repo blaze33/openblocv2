@@ -24,7 +24,6 @@ class Menu extends Component {
       response => response.json()
     ).then(
       json => {
-        console.log(json.posts)
         this.setState({posts: json.posts})
       }
     )
