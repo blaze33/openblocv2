@@ -4,6 +4,7 @@
 @import '~purecss/build/menus.css';
 
 .App {
+  margin: 1em;
   text-align: center;
 }
 
@@ -30,20 +31,22 @@
 }
 
 .AppHeader {
-  background-color: #EEE;
+  padding: 2px;
   margin-bottom: 2em;
+  background-color: #eee;
+  border: solid 2px black;
+  font-weight: bold;
   .pure-menu-link{
     color: #222;
   }
 
   .pure-menu-children {
-    border-radius: 5px;
-    border: 1px solid aliceblue;
+    border: 2px solid #ddd;
     background-color: #FDFDFD;
     .pure-menu-link {
       color: #444;
       &:hover {
-        background-color: #f8eacb;
+        background-color: #eee;
       }
     }
   }
@@ -94,6 +97,17 @@
 .AppContent {
   section {
     margin-bottom: 3em;
+  }
+
+  .expandButton {
+    border: solid 2px black;
+    background-color: #eee;
+    padding: 1em 2em;
+    position: relative;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    margin-bottom: 1em;
   }
 }
 

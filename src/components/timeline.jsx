@@ -61,7 +61,7 @@ class Timeline extends Component {
     this.paddingInner = 100
     this.paddingOuter = 100
     this.marginTop = 10
-    this.marginLeft = 1
+    this.marginLeft = 0
     this.zScale = scaleOrdinal({
       domain: categoryKeys,
       range: categoryColors
@@ -140,10 +140,13 @@ class Timeline extends Component {
 
   render () {
     return (
-      <div style={{width: '100%', margin: 'auto', position: 'relative'}} >
-        <button className='pure-button' onClick={this.handleClick}>Expand timeline</button><br />
+      <div style={{width: '100%', margin: 'auto', position: 'relative', textAlign: 'left'}} >
+        <div style={{textAlign: 'center'}}>
+          <button className='expandButton' onClick={this.handleClick}>Expand timeline</button><br />
+        </div>
         <svg
           ref={s => (this.svg = s)}
+          style={{left: 0}}
           width={this.props.width}
           height={this.state.height + this.marginTop + 100}
           onMouseEnter={event => {
