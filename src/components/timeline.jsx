@@ -282,7 +282,7 @@ class Timeline extends Component {
         </svg>
         {this.props.tooltipOpen &&
         <Tooltip
-          top={this.props.tooltipData.top + 60}
+          top={this.props.tooltipData.top + 100}
           left={this.props.tooltipData.left - 60 * this.props.tooltipData.left / this.props.width}
           style={{
             minWidth: 60,
