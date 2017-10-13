@@ -36,7 +36,7 @@ class Home extends Component {
               <div className='pure-u-1-24 pure-u-md-4-24' />
             </section>
             <section className='pure-g'>
-              <div className='pure-u-1' style={{position: 'fixed', bottom: 0}}>
+              <div className='pure-u-1'>
                 <Timeline width={this.props.size.width} height={400} />
               </div>
             </section>
