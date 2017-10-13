@@ -204,6 +204,7 @@ class Timeline extends Component {
               numTicks={15}
               top={this.state.height + 40}
               left={this.marginLeft}
+              tickLabelProps={(x) => ({ writingMode: 'tb', fontSize: 10})}
             />
             {categoryKeys &&
             categoryKeys.map((key, i) => {
