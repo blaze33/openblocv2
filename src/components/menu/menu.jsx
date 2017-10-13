@@ -14,7 +14,7 @@ import InstagramIcon from '../../images/instagram-icon.png'
 class Menu extends Component {
   render () {
     return (
-      <div className='AppHeader pure-menu pure-menu-horizontal'>
+      <div className='AppHeader pure-menu pure-menu-horizontal' style={{position: 'sticky', top: 0, zIndex: 1}}>
         <Link to={`${process.env.PUBLIC_URL}/`} className='pure-menu-heading pure-menu-link'>
           <img src={logo} className='App-logo' alt='logo' />
           Openbloc

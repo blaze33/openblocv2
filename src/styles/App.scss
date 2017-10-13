@@ -43,6 +43,7 @@
   .pure-menu-children {
     border: 2px solid #ddd;
     background-color: #FDFDFD;
+    transform: translate(-50%, 0);
     .pure-menu-link {
       color: #444;
       &:hover {
@@ -51,7 +52,6 @@
     }
   }
 
-  
   .blogLinks {
     li {
       // border: 1px solid #DDD;
