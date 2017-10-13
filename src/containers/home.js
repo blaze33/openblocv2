@@ -16,7 +16,7 @@ class Home extends Component {
               <div className='pure-u-22-24 pure-u-md-16-24'>
                 <div className='pure-g'>
                   <div className='pure-u-1 pure-u-md-1-3'>
-                    <img style={{border: 'solid 2px black', maxWidth: '75%', filter: 'grayscale(75%)', margin: '1em'}}
+                    <img style={{border: 'solid 2px black', maxWidth: '75%', filter: 'grayscale(25%)', margin: '1em'}}
                       src='https://www.gravatar.com/avatar/e5245156ef88ce267e06145a8c777277?s=200&d=mm&r=x'
                       alt=''
                       />
