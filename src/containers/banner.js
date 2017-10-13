@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import * as d3 from 'd3'
 import {interpolatePath} from 'd3-interpolate-path'
+import {interpolateSpectral} from 'd3-scale-chromatic'
 import absolutePolygons from '../data/points'
 import { LinePath } from '@vx/shape'
 import bannerJPG from '../images/banner-6.jpg'
@@ -82,6 +83,15 @@ class Banner extends Component {
               yScale={y => y}
               x={p => p.x}
               y={p => p.y}
+              fill={
+                polygon.length > 2000
+                  ? '#fff'
+                  : Math.random() < 0.04
+                    ? '#333'
+                    : interpolateSpectral(
+                      (polygon.path[0].x + polygon.path[0].y) / (1600 + 900)
+                    )
+              }
               strokeWidth={2}
               stroke={'#111'}
               strokeDasharray={polygon.length}
