@@ -1,17 +1,19 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import Home from '../containers/home'
 import Banner from '../containers/banner'
+import NoMatch from '../containers/404'
 
 const basename = process.env.PUBLIC_URL
 
 class App extends Component {
   render () {
     return (
-      <div>
+      <Switch>
         <Route exact path={`${basename}/`} component={Banner} />
         <Route exact path={`${basename}/home`} component={Home} />
-      </div>
+        <Route status={404} component={NoMatch} />
+      </Switch>
     )
   }
 }
