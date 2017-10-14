@@ -8,6 +8,17 @@
   text-align: center;
 }
 
+
+@media (max-width: 420px) {
+  .App {
+    margin: 0;
+  }
+  .pure-menu-link {
+    padding: 0.5em
+  }
+}
+
+
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 1.5em;
