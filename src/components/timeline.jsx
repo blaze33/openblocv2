@@ -206,6 +206,14 @@ class Timeline extends Component {
               left={this.marginLeft}
               tickLabelProps={(x) => ({ writingMode: 'tb', fontSize: 10})}
             />
+            {categoryKeys && categoryKeys.map((key, i) => (
+              <Line
+                key={`vx-grid-row-${i}`}
+                from={{x: 0, y: this.yScale(key) + 20}}
+                to={{x: this.xScale.range()[1], y: this.yScale(key) + 20}}
+                stroke='#eaf0f6'
+              />
+            ))}
             {categoryKeys &&
             categoryKeys.map((key, i) => {
               return (
