@@ -5,8 +5,6 @@ import logo from '../images/logo.png'
 import { Switch, Route } from 'react-router-dom'
 import BlogList from '../components/menu/blogList'
 
-const basename = process.env.PUBLIC_URL
-
 class Home extends Component {
   render () {
     return (
@@ -37,8 +35,8 @@ class Home extends Component {
                   position: 'absolute',
                   margin: 'auto',
                   top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
+                  left: '20%',
+                  transform: 'translate(-12.5%, -50%)',
                   WebkitTextStroke: '2px Black',
                   color: 'transparent',
                   fontSize: '5em'

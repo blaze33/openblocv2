@@ -44,7 +44,7 @@ class BlogList extends Component {
             Blog Home
             </a>
           </td>
-          <td><img src={openblocBlog} /></td>
+          <td><img alt='Openbloc Blog' src={openblocBlog} /></td>
         </tr>
         {this.state.ready ? this.state.posts.map((post, index) => (
           <tr key={index} onClick={() => window.location = blogUrl + post.url}>
@@ -55,7 +55,7 @@ class BlogList extends Component {
                 <span className='date'>{moment(post.published_at).format('YYYY-MM-DD')}</span>
               </a>
             </td>
-            <td><img src={post.feature_image}/></td>
+            <td><img alt='' src={post.feature_image}/></td>
           </tr>
             )
           ) : (
