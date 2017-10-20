@@ -12,7 +12,7 @@ class Home extends Component {
     return (
       <div className='IM pure-g'>
         <div className='header pure-u-1'>
-          <Link to='/design-mi/'>
+          <Link to={`${basename}/design-mi/`}>
             <img alt='logo' className='App-logo' src={logo}/>
             <p>MAXIME ROUYRRE</p>
           </Link>
