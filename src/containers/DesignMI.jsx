@@ -5,6 +5,8 @@ import logo from '../images/logo.png'
 import { Switch, Route } from 'react-router-dom'
 import BlogList from '../components/menu/blogList'
 
+const basename = process.env.PUBLIC_URL
+
 class Home extends Component {
   render () {
     return (
@@ -17,7 +19,7 @@ class Home extends Component {
         </div>
         <div className='content'>
           <Switch>
-            <Route exact path='/design-mi/' >
+            <Route exact path={`${basename}/design-mi/`} >
               <div
                 style={{
                   overflow: 'hidden',
@@ -46,7 +48,7 @@ class Home extends Component {
               </div>
               </div>
             </Route>
-            <Route path='/design-mi/about' >
+            <Route path={`${basename}/design-mi/about`} >
               <div className='tagline'
                 style={{
                   margin: 'auto',
@@ -71,14 +73,14 @@ class Home extends Component {
                 </div>
               </div>
             </Route>
-            <Route path='/design-mi/blog'>
+            <Route path={`${basename}/design-mi/blog`}>
               <BlogList />
             </Route>
           </Switch>
         </div>
         <div className='pure-g' style={{position: 'fixed', bottom: 0, width: '100%', textAlign: 'center', fontSize: '5vw', backgroundColor: 'white'}}>
           <div className='pure-u-1-3' style={{margin: '1em 0em'}}>
-            <Link to='about'>
+            <Link to={`${process.env.PUBLIC_URL}/design-mi/about`}>
               ABOUT ME
             </Link>
           </div>
