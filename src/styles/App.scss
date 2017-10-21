@@ -272,41 +272,6 @@ svg text::selection {
   }
 }
 
-@media (max-width: 500px) {
-  .IM {
-    .tagline {
-      width: 80%;
-      a {
-        font-size: 4em;
-      }
-    }
-    .header {
-      margin: 1em;
-      img, p {
-        display: inline-block;
-        height: 1.2em;
-        vertical-align: middle;
-        margin: 0 0.5em;
-      }
-
-    }
-    .blogList {
-      width: 90vw;
-      left: 0;
-      right: 0;
-      margin: auto;
-    }
-  }
-}
-
-@media (min-width: 1100px) {
-  .IM {
-    .links {
-      font-size: 55px;
-    }
-  }
-}
-
 $primary-color: #111;
 @import '~loaders.css/src/animations/line-scale.scss';
 
@@ -363,6 +328,47 @@ $primary-color: #111;
     }
     .twitter svg {
       fill: #1da1f2;
+    }
+  }
+}
+
+
+@media (max-width: 500px) {
+  .IM {
+    font-size: 1rem;
+    .contact table a {
+      font-size: 1rem;
+
+    }
+    .tagline {
+      width: 80%;
+      a {
+        font-size: 4em;
+      }
+    }
+    .header {
+      margin: 1em;
+      img, p {
+        display: inline-block;
+        height: 1.2em;
+        vertical-align: middle;
+        margin: 0 0.5em;
+      }
+
+    }
+    .blogList {
+      width: 90vw;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+  }
+}
+
+@media (min-width: 1100px) {
+  .IM {
+    .links {
+      font-size: 55px;
     }
   }
 }
