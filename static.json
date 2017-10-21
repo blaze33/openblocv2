@@ -1,0 +1,5 @@
+{
+  "root": "build/",
+  "error_page": "build/404.html",
+  "https_only": true
+}
