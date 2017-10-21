@@ -183,6 +183,8 @@ svg text::selection {
 
 .IM {
   letter-spacing: 0em;
+  font-family: Ubuntu !important;
+  font-size: 1.2rem;
   .header {
     text-align: center;
     margin: 2em;
@@ -191,7 +193,7 @@ svg text::selection {
       height: 70px;
     }
     p {
-      font-size: 1.4rem;
+      font-size: 1rem;
     }
   }
   .tagline {
@@ -248,7 +250,7 @@ svg text::selection {
     bottom: 0;
     width: 100%;
     text-align: center;
-    font-size: 5vw;
+    font-size: 4vw;
     background-color: white;
     .link {
       margin: 0.5em 0em 1em;
@@ -296,4 +298,55 @@ $primary-color: #111;
 }
 .loader-active {
   display: block;
+}
+
+.IM .contact {
+  width: 100%;
+  table {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 40%;
+    text-align: center;
+    border-spacing: 2px;
+    border-collapse: separate;
+    font-size: 2em;
+    font-weight: normal;
+    tr {
+      cursor: pointer;
+      margin: 2px;
+    }
+    td {
+      padding: 5px;
+      border: 2px solid transparent;
+    }
+    tr:hover {
+      td {
+        border: 2px solid black;
+      }
+    }
+    a {
+      display: block;
+      width: 100%;
+      heigth: 100%;
+      font-size: 1.2rem;
+    }
+    img {
+      width: 32px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .email svg {
+      stroke: #dd4b39;
+      stroke-width: 2px;
+      fill: white;
+    }
+    .linkedin svg {
+      fill: #0077B5;
+    }
+    .twitter svg {
+      fill: #1da1f2;
+    }
+  }
 }

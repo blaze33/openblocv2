@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import logo from '../images/logo.png'
 import { Switch, Route } from 'react-router-dom'
 import BlogList from '../components/menu/blogList'
+import Contact from '../components/menu/contact'
 
 const basename = process.env.PUBLIC_URL
 
@@ -51,7 +52,7 @@ class Home extends Component {
                       alt=''
                       />
                 </div>
-                <div style={{display: 'inline-block', verticalAlign: 'middle', fontSize: '1.2em', maxWidth: '20em'}}>
+                <div style={{display: 'inline-block', verticalAlign: 'middle', maxWidth: '20em'}}>
                   <p>
                       Hi! I'm Maxime Rouyrre. I'm an Entrepreneur, UX Designer & Full-stack Web Engineer.
                     </p><p>
@@ -64,6 +65,9 @@ class Home extends Component {
             </Route>
             <Route path={`${basename}/design-mi/blog`}>
               <BlogList />
+            </Route>
+            <Route path={`${basename}/design-mi/contact`}>
+              <Contact />
             </Route>
           </Switch>
         </div>
