@@ -215,11 +215,11 @@ svg text::selection {
     right: 0;
     margin: auto;
     transform: translate(0, -50%);
-    textAlign: center;
+    text-align: center;
     a {
-      WebkitTextStroke: 2px Black;
+      -webkit-text-stroke: 2px black;
       color: transparent;
-      fontSize: 5em;
+      font-size: 5em;
     }
   }
   .blogList {
