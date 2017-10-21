@@ -276,6 +276,9 @@ svg text::selection {
   .IM {
     .tagline {
       width: 80%;
+      a {
+        font-size: 4em;
+      }
     }
     .header {
       margin: 1em;
@@ -317,7 +320,6 @@ $primary-color: #111;
 .IM .contact {
   width: 100%;
   table {
-    position: absolute;
     left: 0;
     right: 0;
     margin: auto;
