@@ -3,12 +3,8 @@ import moment from 'moment'
 import openblocBlog from '../../images/openblocBlog.jpg'
 import {Loader} from 'react-loaders'
 import {connect} from 'react-redux'
-import {action} from '../../store'
 
 const blogUrl = 'https://blog.openbloc.fr'
-const blogApiUrl = `${blogUrl}/ghost/api/v0.1`
-const authData = 'client_id=ghost-frontend&client_secret=bb06581e7cc4'
-
 
 class BlogList extends Component {
 

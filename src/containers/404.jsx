@@ -1,7 +1,4 @@
 import React, { Component } from 'react'
-import moment from 'moment'
-import sizeMe from 'react-sizeme'
-import Menu from '../components/menu/menu'
 import { Link } from 'react-router-dom'
 import logo from '../images/logo.png'
 
@@ -44,4 +41,4 @@ class NoMatch extends Component {
   }
 }
 
-export default sizeMe()(NoMatch)
+export default NoMatch

@@ -1,12 +1,8 @@
 import React, {Component} from 'react'
-import { Link } from 'react-router-dom'
 import FaLinkedin from 'react-icons/lib/fa/linkedin'
 import FaGithub from 'react-icons/lib/fa/github'
 import FaTwitter from 'react-icons/lib/fa/twitter'
 import FaEnvelope from 'react-icons/lib/fa/envelope'
-
-import logo from '../../images/logo.png'
-import BlogItem from './blogItem'
 import careersIcon from '../../images/careers-icon.png'
 import StackoverflowIcon from '../../images/so-icon.png'
 import InstagramIcon from '../../images/instagram-icon.png'
