@@ -208,6 +208,20 @@ svg text::selection {
     text-decoration: none;
     color: black;
   }
+  .tagline {
+    position: absolute;
+    top: 50vh;
+    left: 0;
+    right: 0;
+    margin: auto;
+    transform: translate(0, -50%);
+    textAlign: center;
+    a {
+      WebkitTextStroke: 2px Black;
+      color: transparent;
+      fontSize: 5em;
+    }
+  }
   .blogList {
     width: 60vw;
     left: 0;

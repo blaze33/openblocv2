@@ -141,14 +141,12 @@ class Timeline extends Component {
   render () {
     return (
       <div style={{width: '100%', margin: 'auto', position: 'relative', textAlign: 'left'}} >
-        <div style={{textAlign: 'center'}}>
-          <button className='expandButton' onClick={this.handleClick}>Expand timeline</button><br />
-        </div>
         <svg
           ref={s => (this.svg = s)}
           style={{left: 0}}
           width={this.props.width}
           height={this.state.height + this.marginTop + 100}
+          onClick={this.handleClick}
           onMouseEnter={event => {
             this.tween('deformation', this.maxDeformation, 500)
           }}
@@ -291,8 +289,8 @@ class Timeline extends Component {
         </svg>
         {this.props.tooltipOpen &&
         <Tooltip
-          top={this.props.tooltipData.top + 100}
-          left={this.props.tooltipData.left - 60 * this.props.tooltipData.left / this.props.width}
+          top={this.props.tooltipData.top + 50}
+          left={this.props.tooltipData.left - 100 * this.props.tooltipData.left / this.props.width}
           style={{
             minWidth: 60,
             maxWidth: 100,

@@ -45,3 +45,6 @@ window.store = store
 export const action = type => store.dispatch({type})
 
 export default store
+
+// load initial data anyway
+action('POSTS_FETCH_REQUESTED')

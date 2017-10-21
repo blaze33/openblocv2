@@ -47,7 +47,7 @@ class Banner extends Component {
       .attrTween('d', function (d) {
         return interpolatePath(d3.select(this).attr('d'), rect)
       })
-      .on('end', () => this.props.history.push(`${process.env.PUBLIC_URL}/home`))
+      .on('end', () => this.props.history.push(`${process.env.PUBLIC_URL}/home/`))
   }
 
   render () {
