@@ -12,11 +12,6 @@ const authData = 'client_id=ghost-frontend&client_secret=bb06581e7cc4'
 
 class BlogList extends Component {
 
-  constructor(props) {
-    super(props)
-    action('POSTS_FETCH_REQUESTED')
-  }
-
   render () {
     return (
       <table className='blogList'>
@@ -29,7 +24,7 @@ class BlogList extends Component {
           </td>
           <td><img alt='Openbloc Blog' src={openblocBlog} /></td>
         </tr>
-        {this.props.blog.ready && this.props.blog.posts.map((post, index) => (
+        {this.props.ready && this.props.posts.map((post, index) => (
           <tr key={index} onClick={() => window.location = blogUrl + post.url}>
             <td>
               <a href={blogUrl + post.url}>
@@ -42,7 +37,7 @@ class BlogList extends Component {
           </tr>
             ) 
           )}
-          {this.props.blog.fetching && (
+          {this.props.fetching && (
             <tr>
             <td colSpan={2} style={{textAlign: 'center', padding: '3em', border: 'none'}}>
             <Loader type="line-scale" active />
@@ -57,7 +52,9 @@ class BlogList extends Component {
 
 const mapStateToProps = state => {
   return {
-    blog: state.blog
+    posts: state.blog.posts,
+    ready: state.blog.ready,
+    fetching: state.blog.fetching
   }
 }
 
