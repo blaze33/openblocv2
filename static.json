@@ -1,4 +1,4 @@
 {
   "root": "build/",
-  "https_only": true
+  "error_page": "build/404.html"
 }
