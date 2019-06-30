@@ -28,7 +28,7 @@ import bannerJPG from '../images/banner-6.jpg'
 // window.polygons = absolutePolygons
 
 class Banner extends Component {
-  handleClick = event => {
+  openBanner = event => {
     const line = d3.line().x(x => x.x).y(y => y.y)
     const rect = line([{x: -10, y: -10}, {x: 1610, y: -10}, {x: 1610, y: 910}, {x: -10, y: 910}, {x: -10, y: -10}]) + 'Z'
     d3.selectAll('path.small')
@@ -50,11 +50,14 @@ class Banner extends Component {
       .on('end', () => this.props.history.push(`${process.env.PUBLIC_URL}/home/`))
   }
 
+  componentDidMount = () => {
+    setTimeout(this.openBanner, 2300)
+  }
+
   render () {
     return (
       <div
         style={{overflow: 'hidden', width: '100%', height: '100vh', position: 'relative'}}
-        onClick={this.handleClick}
         className='banner'
       >
         <svg viewBox='0 0 1600 900'
