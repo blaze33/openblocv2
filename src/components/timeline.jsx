@@ -35,7 +35,7 @@ const data = [
   { time: moment('2014-01-15'), work: 'KitchenTrotter', end: moment('2014-02-28') },
   { time: moment('2015-05-04'), work: 'Smart Impulse', color: '#7bc623', end: moment() },
 
-  { time: moment('2017-01-01'), now: '2017', end: moment() },
+  { time: moment('2019-01-01'), now: 'now', end: moment() },
   { time: moment(), now: 'now', end: moment() }
 ]
 
