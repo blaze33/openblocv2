@@ -29,6 +29,7 @@ const data = [
   { time: moment('2007-04-01'), work: 'EDF R&D', end: moment('2007-08-30') },
   { time: moment('2008-10-01'), work: 'Altran', color: '#007eaf', end: moment('2011-02-01') },
 
+  { time: moment('2010-06-01'), entrepreneurship: 'Openbloc', color: '#007eaf', end: moment() },
   { time: moment('2012-03-01'), entrepreneurship: 'Newco Project', end: moment('2013-04-01') },
 
   { time: moment('2013-10-01'), work: 'Pricing Assistant', end: moment('2014-01-15') },
@@ -39,7 +40,7 @@ const data = [
   { time: moment(), now: 'now', end: moment() }
 ]
 
-const categoryKeys = [ 'now', 'entrepreneurship', 'work', 'education', 'life' ].reverse()
+const categoryKeys = ['now', 'work', 'entrepreneurship', 'education', 'life' ].reverse()
 const categoryColors = [ '#A7DBD8', '#69D2E7', '#E0E4CC', '#FA6900', '#f8eacb' ].reverse()
 
 class Timeline extends Component {
