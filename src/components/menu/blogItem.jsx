@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import moment from 'moment'
 const blogUrl = 'https://blog.openbloc.com'
 const blogApiUrl = `${blogUrl}/ghost/api/v3/content`
-const authData = `key=${process.env.GHOST_CONTENT_API_KEY}`
+const authData = 'key=7e0085e1f48f66805d524d8083'
 
 class Menu extends Component {
   constructor (props) {

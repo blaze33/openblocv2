@@ -4,7 +4,7 @@ class GhostAPI {
   constructor (props) {
     this.blogUrl = 'https://blog.openbloc.com'
     this.blogApiUrl = `${this.blogUrl}/ghost/api/v3/content`
-    this.authData = `key=${process.env.GHOST_CONTENT_API_KEY}`
+    this.authData = 'key=7e0085e1f48f66805d524d8083'
   }
 
   fetchPosts = () => {
