@@ -41,7 +41,7 @@ class Menu extends Component {
           </li>
           {this.state.posts.map((post, index) => (
             <li className='pure-menu-item' key={index}>
-              <a href={blogUrl + post.url} className='pure-menu-link blogPostLink'>
+              <a href={post.url} className='pure-menu-link blogPostLink'>
                 {post.title}
                 <br />
                 <span>{moment(post.published_at).format('YYYY-MM-DD')}</span>

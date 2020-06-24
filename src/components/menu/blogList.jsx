@@ -23,7 +23,7 @@ class BlogList extends Component {
         {this.props.ready && this.props.posts.map((post, index) => (
           <tr key={index} onClick={() => window.location = blogUrl + post.url}>
             <td>
-              <a href={blogUrl + post.url}>
+              <a href={post.url}>
                 {post.title}
                 <br />
                 <span className='date'>{moment(post.published_at).format('YYYY-MM-DD')}</span>
