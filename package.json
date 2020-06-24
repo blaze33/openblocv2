@@ -2,7 +2,7 @@
   "name": "openbloc-2",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://www.openbloc.fr/",
+  "homepage": "https://www.openbloc.com/",
   "dependencies": {
     "@vx/vx": "^0.0.142",
     "autoprefixer": "7.1.5",
