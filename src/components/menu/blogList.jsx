@@ -4,7 +4,7 @@ import openblocBlog from '../../images/openblocBlog.jpg'
 import {Loader} from 'react-loaders'
 import {connect} from 'react-redux'
 
-const blogUrl = 'https://blog.openbloc.fr'
+const blogUrl = 'https://blog.openbloc.com'
 
 class BlogList extends Component {
 
@@ -31,7 +31,7 @@ class BlogList extends Component {
             </td>
             <td><img alt='' src={post.feature_image}/></td>
           </tr>
-            ) 
+            )
           )}
           {this.props.fetching && (
             <tr>
