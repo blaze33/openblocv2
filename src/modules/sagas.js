@@ -3,7 +3,7 @@ import { call, put, takeEvery } from 'redux-saga/effects'
 class GhostAPI {
   constructor (props) {
     this.blogUrl = 'https://blog.openbloc.com'
-    this.blogApiUrl = `${this.blogUrl}/ghost/api/v0.1`
+    this.blogApiUrl = `${this.blogUrl}/ghost/api/v3`
     this.authData = 'client_id=ghost-frontend&client_secret=18e5b4ad1180'
   }
 
