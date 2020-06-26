@@ -21,7 +21,7 @@ class BlogList extends Component {
           <td><img alt='Openbloc Blog' src={openblocBlog} /></td>
         </tr>
         {this.props.ready && this.props.posts.map((post, index) => (
-          <tr key={index} onClick={() => window.location = blogUrl + post.url}>
+          <tr key={index} onClick={() => window.location = post.url}>
             <td>
               <a href={post.url}>
                 {post.title}
