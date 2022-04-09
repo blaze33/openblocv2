@@ -36,7 +36,7 @@
     "html-webpack-plugin": "2.30.1",
     "jest": "21.2.1",
     "loaders.css": "^0.1.2",
-    "moment": "^2.19.1",
+    "moment": "^2.29.2",
     "node-sass": "^4.12.0",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
